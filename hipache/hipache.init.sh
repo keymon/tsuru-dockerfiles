@@ -78,10 +78,10 @@ do_start()
     #   0 if daemon has been started
     #   1 if daemon was already running
     #   2 if daemon could not be started
-    start-stop-daemon --start --quiet --pidfile $PID --make-pidfile --background \
-        --exec $NODEJS --test > /dev/null || return 1
-    start-stop-daemon --start --quiet --pidfile $PID --make-pidfile --background \
-        --exec $DAEMON -- $DAEMON_OPTS 2>/dev/null || return 2
+    start-stop-daemon --start --quiet --pidfile $PID --make-pidfile \
+        --exec $NODEJS --test || return 1
+    start-stop-daemon --start --quiet --pidfile $PID --make-pidfile \
+        --exec $DAEMON -- $DAEMON_OPTS || return 2
 }
 
 #
