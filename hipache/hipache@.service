@@ -1,0 +1,17 @@
+[Unit]
+Description=Hipache
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill hipache
+ExecStartPre=-/usr/bin/docker rm hipache
+ExecStartPre=/usr/bin/docker pull keymon/tsuru-dockerfiles
+ExecStart=/usr/bin/docker run --name hipache keymon/tsuru-dockerfiles /etc/init.d/hipache start
+ExecStop=/usr/bin/docker stop hipache
+
+[X-Fleet]
+Conflicts=hipache.service
+MachineMetadata=role=router
+
