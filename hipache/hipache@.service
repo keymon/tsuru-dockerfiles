@@ -9,13 +9,11 @@ ExecStartPre=-/usr/bin/docker kill hipache-%i
 ExecStartPre=-/usr/bin/docker rm hipache-%i
 ExecStartPre=/usr/bin/docker pull keymon/tsuru-dockerfiles
 
-ExecStartPre=/bin/sh -c \
-	"docker history keymon/tsuru-dockerfiles:latest >/dev/null || \
-	docker pull keymon/tsuru-dockerfiles:latest"
+ExecStartPre=/usr/bin/docker pull keymon/tsuru-dockerfiles:latest
 
 ExecStart=/usr/bin/docker run --rm \
     --name hipache-%i \
-    --link hipache-redis-%i:hipache-redis \
+    --link hipache-redis-%i:redis \
     -p 8080:8080 \
     keymon/tsuru-dockerfiles \
     /etc/init.d/hipache start
