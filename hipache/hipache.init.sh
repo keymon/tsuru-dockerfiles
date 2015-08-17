@@ -61,8 +61,7 @@ do_config()
         "deadBackendOn500": true,
         "httpKeepAlive": false
     },
-    "redisHost": "$REDIS_HOST",
-    "redisPort": "$REDIS_PORT"
+    "driver": ["redis://${REDIS_PORT##tcp://}"]
 }
 EOF
 }
