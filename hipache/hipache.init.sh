@@ -44,8 +44,10 @@ fi
 #
 do_config()
 {
-	mkdir -p /var/log/hipache
-	cat <<EOF > /etc/hipache.conf
+        mkdir -p /var/log/hipache
+        REDIS_HOST=$(echo ${REDIS_PORT##tcp://} | cut -f 1 -d :)
+        REDIS_PORT=$(echo ${REDIS_PORT##tcp://} | cut -f 2 -d :)
+        cat <<EOF > /etc/hipache.conf
 {
     "server": {
         "debug": true,
@@ -61,7 +63,8 @@ do_config()
         "deadBackendOn500": true,
         "httpKeepAlive": false
     },
-    "driver": ["redis://${REDIS_PORT##tcp://}"]
+    "redisHost": "$REDIS_HOST",
+    "redisPort": "$REDIS_PORT"
 }
 EOF
 }
